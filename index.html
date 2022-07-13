@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>API Test</title>
+		<script src="jquery-3.6.0.min.js"></script>
+	</head>
+	
+	<body>
+		<button onClick="good()">Send a correct POST request to the API</button><br>
+		<button onClick="missingHeader()">Send a POST request without the proper headers to the API</button><br>
+		<button onClick="missingData()">Send a POST request without a body to the API</button><br>
+		<button onClick="badMedia()">Send a POST request with incorrect ContentType to the API</button><br>
+		<button onClick="notHTTPS()">Send a POST request to the API using HTTP</button>
+		
+		<code id="sent"></code>
+		
+		<script type="text/javascript">
+			var colon = document.URL.indexOf(":");
+			var lastSlash = document.URL.lastIndexOf("/");
+			if(colon > -1 && colon == lastSlash-2) {
+				var docURL = document.URL.substring((colon > -1 ? colon+3 : 0));
+			} else {
+				var docURL = document.URL.substring((colon > -1 ? colon+3 : 0), lastSlash);
+			}
+			
+			function good() {
+				$.ajax({
+					url: "https://"+docURL+"/API.php",
+					method: "POST",
+					contentType: "application/json",
+					headers: {
+						Authorization: "1234567890",
+						"Subscription-Key": "ABCDEFGHIJ"
+					},
+					processData: false,
+					data: JSON.stringify([
+						{
+							SupplierName: "Black Mountain",
+							SupplierID: "BM",
+							SandMineLocationID: "ElDorado",
+							TransactionID: "1234-ABCD",
+							TMS: "000000001",
+							LaneID: "1",
+							Ticket: "83312900",
+							PO: "4701722783",
+							BOL: "11287084",
+							Product: "4070",
+							UOM: "LB",
+							Gross: 77340,
+							Tare: 27820,
+							Net: 49520,
+							CarrierName: "Cisco Logistics",
+							TruckID: "307",
+							TrailerID: "307",
+							Destination: "3847053 WINDHAM TXL C1 5308LH,MIDLAND",
+							DestinationID: "3847053",
+							EntryTimeUTC: "2018-09-04T21:45:00Z",
+							ExitTimeUTC: "2018-09-04T21:51:04Z"
+						},
+						{
+							SupplierName: "Black Mountain",
+							SupplierID: "BM",
+							SandMineLocationID: "Vest",
+							TransactionID: "7890XYZ",
+							TMS: "11111111111",
+							LaneID: "2",
+							Ticket: "83312901",
+							PO: "4701722784",
+							BOL: "11287085",
+							Product: "100",
+							UOM: "LB",
+							Gross: 80000,
+							Tare: 40000,
+							Net: 40000,
+							CarrierName: "Eagle River",
+							TruckID: "ABC",
+							TrailerID: "123",
+							Destination: "3838572 WHATCHA WANT UNIT 7303H,WARD",
+							DestinationID: "3838572",
+							EntryTimeUTC: "2018-09-04T21:45:00Z",
+							ExitTimeUTC: "2018-09-04T21:51:04Z"
+						}
+					]),
+					complete: function(jqXHR, textStatus) {
+						if(jqXHR.readyState !== 4) {
+							window.confirm("CORS is ignoring the Access-Control-Allow-Origin header; and although the request went through and a response was recieved, jQuery doesn't know what to show for the status code. Recommend switching to an HTTPS URL.");
+						} else {
+							window.confirm("Received status code " + jqXHR.status);
+						}
+					}
+				});
+			}
+			
+			function missingHeader() {
+				$.ajax({
+					url: "https://"+docURL+"/API.php",
+					method: "POST",
+					contentType: "application/json",
+					processData: false,
+					data: JSON.stringify([
+						{
+							SupplierName: "Black Mountain",
+							SupplierID: "BM",
+							SandMineLocationID: "ElDorado",
+							TransactionID: "1234-ABCD",
+							TMS: "000000001",
+							LaneID: "1",
+							Ticket: "83312900",
+							PO: "4701722783",
+							BOL: "11287084",
+							Product: "4070",
+							UOM: "LB",
+							Gross: 77340,
+							Tare: 27820,
+							Net: 49520,
+							CarrierName: "Cisco Logistics",
+							TruckID: "307",
+							TrailerID: "307",
+							Destination: "3847053 WINDHAM TXL C1 5308LH,MIDLAND",
+							DestinationID: "3847053",
+							EntryTimeUTC: "2018-09-04T21:45:00Z",
+							ExitTimeUTC: "2018-09-04T21:51:04Z"
+						},
+						{
+							SupplierName: "Black Mountain",
+							SupplierID: "BM",
+							SandMineLocationID: "Vest",
+							TransactionID: "7890XYZ",
+							TMS: "11111111111",
+							LaneID: "2",
+							Ticket: "83312901",
+							PO: "4701722784",
+							BOL: "11287085",
+							Product: "100",
+							UOM: "LB",
+							Gross: 80000,
+							Tare: 40000,
+							Net: 40000,
+							CarrierName: "Eagle River",
+							TruckID: "ABC",
+							TrailerID: "123",
+							Destination: "3838572 WHATCHA WANT UNIT 7303H,WARD",
+							DestinationID: "3838572",
+							EntryTimeUTC: "2018-09-04T21:45:00Z",
+							ExitTimeUTC: "2018-09-04T21:51:04Z"
+						}
+					]),
+					complete: function(jqXHR, textStatus) {
+						if(jqXHR.readyState !== 4) {
+							window.confirm("CORS is ignoring the Access-Control-Allow-Origin header; and although the request went through and a response was recieved, jQuery doesn't know what to show for the status code. Recommend switching to an HTTPS URL.");
+						} else {
+							window.confirm("Received status code " + jqXHR.status);
+						}
+					}
+				});
+			}
+			
+			function missingData() {
+				$.ajax({
+					url: "https://"+docURL+"/API.php",
+					method: "POST",
+					contentType: "application/json",
+					headers: {
+						Authorization: "1234567890",
+						"Subscription-Key": "ABCDEFGHIJ"
+					},
+					processData: false,
+					data: JSON.stringify(""),
+					complete: function(jqXHR, textStatus) {
+						if(jqXHR.readyState !== 4) {
+							window.confirm("CORS is ignoring the Access-Control-Allow-Origin header; and although the request went through and a response was recieved, jQuery doesn't know what to show for the status code. Recommend switching to an HTTPS URL.");
+						} else {
+							window.confirm("Received status code " + jqXHR.status);
+						}
+					}
+				});
+			}
+			
+			function badMedia() {
+				$.ajax({
+					url: "https://"+docURL+"/API.php",
+					method: "POST",
+					headers: {
+						Authorization: "1234567890",
+						"Subscription-Key": "ABCDEFGHIJ"
+					},
+					processData: false,
+					data: JSON.stringify([
+						{
+							SupplierName: "Black Mountain",
+							SupplierID: "BM",
+							SandMineLocationID: "ElDorado",
+							TransactionID: "1234-ABCD",
+							TMS: "000000001",
+							LaneID: "1",
+							Ticket: "83312900",
+							PO: "4701722783",
+							BOL: "11287084",
+							Product: "4070",
+							UOM: "LB",
+							Gross: 77340,
+							Tare: 27820,
+							Net: 49520,
+							CarrierName: "Cisco Logistics",
+							TruckID: "307",
+							TrailerID: "307",
+							Destination: "3847053 WINDHAM TXL C1 5308LH,MIDLAND",
+							DestinationID: "3847053",
+							EntryTimeUTC: "2018-09-04T21:45:00Z",
+							ExitTimeUTC: "2018-09-04T21:51:04Z"
+						},
+						{
+							SupplierName: "Black Mountain",
+							SupplierID: "BM",
+							SandMineLocationID: "Vest",
+							TransactionID: "7890XYZ",
+							TMS: "11111111111",
+							LaneID: "2",
+							Ticket: "83312901",
+							PO: "4701722784",
+							BOL: "11287085",
+							Product: "100",
+							UOM: "LB",
+							Gross: 80000,
+							Tare: 40000,
+							Net: 40000,
+							CarrierName: "Eagle River",
+							TruckID: "ABC",
+							TrailerID: "123",
+							Destination: "3838572 WHATCHA WANT UNIT 7303H,WARD",
+							DestinationID: "3838572",
+							EntryTimeUTC: "2018-09-04T21:45:00Z",
+							ExitTimeUTC: "2018-09-04T21:51:04Z"
+						}
+					]),
+					complete: function(jqXHR, textStatus) {
+						if(jqXHR.readyState !== 4) {
+							window.confirm("CORS is ignoring the Access-Control-Allow-Origin header; and although the request went through and a response was recieved, jQuery doesn't know what to show for the status code. Recommend switching to an HTTPS URL.");
+						} else {
+							window.confirm("Received status code " + jqXHR.status);
+						}
+					}
+				});
+			}
+			
+			function notHTTPS() {
+				$.ajax({
+					url: "http://"+docURL+"/API.php",
+					method: "POST",
+					contentType: "application/json",
+					headers: {
+						Authorization: "1234567890",
+						"Subscription-Key": "ABCDEFGHIJ"
+					},
+					processData: false,
+					data: JSON.stringify([
+						{
+							SupplierName: "Black Mountain",
+							SupplierID: "BM",
+							SandMineLocationID: "ElDorado",
+							TransactionID: "1234-ABCD",
+							TMS: "000000001",
+							LaneID: "1",
+							Ticket: "83312900",
+							PO: "4701722783",
+							BOL: "11287084",
+							Product: "4070",
+							UOM: "LB",
+							Gross: 77340,
+							Tare: 27820,
+							Net: 49520,
+							CarrierName: "Cisco Logistics",
+							TruckID: "307",
+							TrailerID: "307",
+							Destination: "3847053 WINDHAM TXL C1 5308LH,MIDLAND",
+							DestinationID: "3847053",
+							EntryTimeUTC: "2018-09-04T21:45:00Z",
+							ExitTimeUTC: "2018-09-04T21:51:04Z"
+						},
+						{
+							SupplierName: "Black Mountain",
+							SupplierID: "BM",
+							SandMineLocationID: "Vest",
+							TransactionID: "7890XYZ",
+							TMS: "11111111111",
+							LaneID: "2",
+							Ticket: "83312901",
+							PO: "4701722784",
+							BOL: "11287085",
+							Product: "100",
+							UOM: "LB",
+							Gross: 80000,
+							Tare: 40000,
+							Net: 40000,
+							CarrierName: "Eagle River",
+							TruckID: "ABC",
+							TrailerID: "123",
+							Destination: "3838572 WHATCHA WANT UNIT 7303H,WARD",
+							DestinationID: "3838572",
+							EntryTimeUTC: "2018-09-04T21:45:00Z",
+							ExitTimeUTC: "2018-09-04T21:51:04Z"
+						}
+					]),
+					complete: function(jqXHR, textStatus) {
+						if(jqXHR.readyState !== 4) {
+							window.confirm("CORS is ignoring the Access-Control-Allow-Origin header; and although the request went through and a response was recieved, jQuery doesn't know what to show for the status code. Recommend switching to an HTTPS URL.");
+						} else {
+							window.confirm("Received status code " + jqXHR.status);
+						}
+					}
+				});
+			}
+		</script>
+	</body>
+</html>
