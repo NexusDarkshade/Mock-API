@@ -6,10 +6,15 @@
 	</head>
 	
 	<body>
+		<h1>HTTPS:// Only</h1>
+		
 		<button onClick="good()">Send a correct POST request to the API</button><br>
 		<button onClick="missingHeader()">Send a POST request without the proper headers to the API</button><br>
 		<button onClick="missingData()">Send a POST request without a body to the API</button><br>
-		<button onClick="badMedia()">Send a POST request with incorrect ContentType to the API</button><br>
+		<button onClick="badMedia()">Send a POST request with incorrect Content-Type to the API</button>
+		
+		<h1>HTTP:// Only</h1>
+		
 		<button onClick="notHTTPS()">Send a POST request to the API using HTTP</button>
 		
 		<code id="sent"></code>
@@ -83,7 +88,7 @@
 					]),
 					complete: function(jqXHR, textStatus) {
 						if(jqXHR.readyState !== 4) {
-							window.confirm("CORS is ignoring the Access-Control-Allow-Origin header; and although the request went through and a response was recieved, jQuery doesn't know what to show for the status code. Recommend switching to an HTTPS URL.");
+							window.confirm("Although the request went through and a response was recieved, CORS is interfering and jQuery doesn't know what to show for the status code. Recommend checking that the URL protocol matches the request protocol.");
 						} else {
 							window.confirm("Received status code " + jqXHR.status);
 						}
@@ -147,7 +152,7 @@
 					]),
 					complete: function(jqXHR, textStatus) {
 						if(jqXHR.readyState !== 4) {
-							window.confirm("CORS is ignoring the Access-Control-Allow-Origin header; and although the request went through and a response was recieved, jQuery doesn't know what to show for the status code. Recommend switching to an HTTPS URL.");
+							window.confirm("Although the request went through and a response was recieved, CORS is interfering and jQuery doesn't know what to show for the status code. Recommend checking that the URL protocol matches the request protocol.");
 						} else {
 							window.confirm("Received status code " + jqXHR.status);
 						}
@@ -168,7 +173,7 @@
 					data: JSON.stringify(""),
 					complete: function(jqXHR, textStatus) {
 						if(jqXHR.readyState !== 4) {
-							window.confirm("CORS is ignoring the Access-Control-Allow-Origin header; and although the request went through and a response was recieved, jQuery doesn't know what to show for the status code. Recommend switching to an HTTPS URL.");
+							window.confirm("Although the request went through and a response was recieved, CORS is interfering and jQuery doesn't know what to show for the status code. Recommend checking that the URL protocol matches the request protocol.");
 						} else {
 							window.confirm("Received status code " + jqXHR.status);
 						}
@@ -235,7 +240,7 @@
 					]),
 					complete: function(jqXHR, textStatus) {
 						if(jqXHR.readyState !== 4) {
-							window.confirm("CORS is ignoring the Access-Control-Allow-Origin header; and although the request went through and a response was recieved, jQuery doesn't know what to show for the status code. Recommend switching to an HTTPS URL.");
+							window.confirm("Although the request went through and a response was recieved, CORS is interfering and jQuery doesn't know what to show for the status code. Recommend checking that the URL protocol matches the request protocol.");
 						} else {
 							window.confirm("Received status code " + jqXHR.status);
 						}
@@ -303,7 +308,7 @@
 					]),
 					complete: function(jqXHR, textStatus) {
 						if(jqXHR.readyState !== 4) {
-							window.confirm("CORS is ignoring the Access-Control-Allow-Origin header; and although the request went through and a response was recieved, jQuery doesn't know what to show for the status code. Recommend switching to an HTTPS URL.");
+							window.confirm("Although the request went through and a response was recieved, CORS is interfering and jQuery doesn't know what to show for the status code. Recommend checking that the URL protocol matches the request protocol.");
 						} else {
 							window.confirm("Received status code " + jqXHR.status);
 						}

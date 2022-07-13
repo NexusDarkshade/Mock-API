@@ -2,7 +2,7 @@
 	// Check HTTPS header
 	if($_SERVER['SERVER_PORT'] !== 443 && (empty($_SERVER['HTTPS']) || strcmp($_SERVER['HTTPS'], 'off') === 0)) { // Check if the request is not through HTTPS
 		http_response_code(403);
-		exit(); // Redirect to HTTPS version of request
+		exit(); // Deny HTTP requests
 	}
 	
 	// Check request method
@@ -20,7 +20,7 @@
 		header('Access-Control-Allow-Headers: Authorization, Subscription-Key, Content-Type, X-Requested-With');
 		header('Content-Length: 0');
 		header('Vary: Origin');
-		exit();
+		exit(); // Unsuccessfully navigate the CORS minefield
 		
 	} else if(strcmp($request, 'POST') !== 0) { // Check if request is not POST
 		http_response_code(501);
